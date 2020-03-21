@@ -34,6 +34,11 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
     public float gravity = -9.81f;
 
+    GameObject cidadao;
+    public Transform carregandoCidadaoOmbro;
+
+    Vector3 reversedMove;
+
     Vector3 move;
     Vector3 velocity;
     Vector3 characterVelocityMomentum;
@@ -261,15 +266,52 @@ public class PlayerController : MonoBehaviour
         moveY = 0f;
     }
 
+    void SavingCidadao()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            cidadao.gameObject.transform.position = carregandoCidadaoOmbro.position;
+            Debug.Log("pegou");
+        }
+    }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (!isGrounded && hit.normal.y < 0.1f)
         {
             if (TestInputJump())
             {
-                moveY = jumpForce;
-                move += Vector3.Scale(hit.normal , characterVelocityMomentum);
+                Vector3 testVector = Vector3.Reflect(move, hit.normal);
+
+                if (move.y <= 0)
+                {
+                    //falling
+                    reversedMove = Vector3.Reflect(hit.moveDirection, move);
+                    Debug.DrawRay(transform.position, reversedMove, Color.yellow, 10f);
+                }
+                else
+                {
+                    //up
+                    reversedMove = Vector3.Reflect(move, hit.moveDirection);
+                    Debug.DrawRay(transform.position, reversedMove, Color.red, 10f);
+                }
+
+                Debug.DrawRay(transform.position, testVector, Color.white, 10f);
+
+                Debug.DrawRay(transform.position, hit.moveDirection, Color.green, 10f);
+                Debug.DrawRay(transform.position, hit.normal, Color.black, 10f);
+                //Debug.Break();
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Cidadao"))
+        {
+            cidadao = other.gameObject;
+
+            Debug.Log("encostou cidadao");
         }
     }
 }
