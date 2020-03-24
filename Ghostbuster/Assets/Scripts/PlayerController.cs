@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -109,6 +110,17 @@ public class PlayerController : MonoBehaviour
                 break;
 
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Hook02");
+        }
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            Debug.Break();
+        }
+
         
 
     }
