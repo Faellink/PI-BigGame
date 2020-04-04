@@ -242,7 +242,7 @@ RectTransform:
   m_GameObject: {fileID: 162056138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_Children: []
   m_Father: {fileID: 226894012}
   m_RootOrder: 1
@@ -270,8 +270,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2117044028838595662, guid: 4926a9e18ee72424c9cc2f8ae5e08039,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: fbc4b868f41aa7a41ba2b97d804f1ae3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5055,6 +5054,7 @@ GameObject:
   - component: {fileID: 226894011}
   - component: {fileID: 226894010}
   - component: {fileID: 226894009}
+  - component: {fileID: 226894013}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -5143,6 +5143,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &226894013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226894008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5940c3f53ba7b9642adfa8f40c561804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1782108015}
+  crosshairOn: {fileID: 162056138}
+  crosshairOff: {fileID: 678554522}
 --- !u!1 &247151624
 GameObject:
   m_ObjectHideFlags: 0
@@ -7377,14 +7392,14 @@ RectTransform:
   m_GameObject: {fileID: 678554522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 226894012}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.35, y: 0.13}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &678554524
@@ -7405,8 +7420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2055798641113843040, guid: 4926a9e18ee72424c9cc2f8ae5e08039,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: fe183dd8b9d3b0f4c93bc5a5cc20b97d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8060,12 +8074,13 @@ MonoBehaviour:
     m_Bits: 512
   hookshotThrowSpeed: 250
   groundDistance: 0.4
-  hookshotRange: 100
+  hookshotRange: 200
   hookshotEnabled: 0
   jumpSpeed: 200
   jumpForce: 20
   speed: 25
   gravity: -45
+  resetGravityExecuted: 0
   carregandoCidadaoOmbro: {fileID: 2042292449}
 --- !u!143 &1782108016
 CharacterController:

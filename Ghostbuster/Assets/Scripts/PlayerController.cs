@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
     public float gravity = -9.81f;
 
+    public bool resetGravityExecuted;
+
     GameObject cidadao;
     public Transform carregandoCidadaoOmbro;
 
@@ -115,7 +117,7 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("Hook02");
         }
-
+        
         if (Input.GetMouseButtonDown(2))
         {
             Debug.Break();
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(characterVelocityMomentum);
         //Debug.Log(characterVelocityMomentum.magnitude);
 
-        //Debug.Log(move.y);
+        //Debug.Log(gravity);
         //Debug.Log(moveY);
     }
 
@@ -188,6 +190,8 @@ public class PlayerController : MonoBehaviour
         {
             hookshotEnabled = false;
         }
+
+        Debug.DrawRay(transform.position,  playerCamera.transform.forward* hookshotRange, Color.red);
 
         if (TestInputHookshot())
         {
@@ -276,6 +280,7 @@ public class PlayerController : MonoBehaviour
     private void ResetGravity()
     {
         moveY = 0f;
+        //Debug.Log("reset gravity executed");
     }
 
     void SavingCidadao()
