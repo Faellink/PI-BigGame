@@ -40,6 +40,14 @@ public class PlayerController : MonoBehaviour
     GameObject cidadao;
     public Transform carregandoCidadaoOmbro;
 
+    //
+
+    public GameObject cidadaoPrefab;
+    public float forcaJogar;
+    public bool carregarCidadao;
+
+    SavingCidadao cidadaoScrpt;
+
     Vector3 reversedMove;
 
     Vector3 move;
@@ -123,7 +131,7 @@ public class PlayerController : MonoBehaviour
             Debug.Break();
         }
 
-        
+        JogandoCidadao();
 
     }
 
@@ -283,6 +291,50 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("reset gravity executed");
     }
 
+    //
+
+    void JogandoCidadao()
+    {
+
+        SavingCidadao cidadaoScrpt = cidadao.GetComponent<SavingCidadao>();
+        //cidadao.GetComponent<SavingCidadao>();
+
+        if (cidadaoScrpt.cidadaoNoOmbro == true)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
+
+                Destroy(cidadao);
+
+                GameObject cidadaoPrefabInst = Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity) as GameObject;
+
+                Rigidbody[] cidadaoRB = cidadaoPrefabInst.GetComponentsInChildren<Rigidbody>();
+                foreach (var rigidbody in cidadaoRB)
+                {
+                    rigidbody.AddForce(Camera.main.transform.forward * forcaJogar);
+                }
+
+            }
+        }
+            
+
+        /*if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
+
+            GameObject cidadaoPrefabInst = Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity) as GameObject;
+
+            Rigidbody[] cidadaoRB = cidadaoPrefabInst.GetComponentsInChildren<Rigidbody>();
+            foreach (var rigidbody in cidadaoRB)
+            {
+                rigidbody.AddForce(Camera.main.transform.forward * forcaJogar);
+            }
+
+        }*/
+    }
+
     void SavingCidadao()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -328,7 +380,18 @@ public class PlayerController : MonoBehaviour
         {
             cidadao = other.gameObject;
 
+            carregarCidadao = true;
+
             Debug.Log("encostou cidadao");
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Cidadao"))
+        {
+            carregarCidadao = false;
+        }
+    }
+
 }

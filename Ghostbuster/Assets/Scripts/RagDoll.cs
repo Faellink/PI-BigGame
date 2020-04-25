@@ -5,13 +5,19 @@ using UnityEngine;
 public class RagDoll : MonoBehaviour
 {
     public Collider mainCollider;
-    public Collider[] allColliders; 
+    public Collider[] allColliders;
+
+    //
+
+
+    Rigidbody rigid;
 
     // Start is called before the first frame update
     void Start()
     {
         mainCollider = GetComponent<CapsuleCollider>();
         allColliders = GetComponentsInChildren<Collider>(true);
+        rigid = GetComponent<Rigidbody>();
         SetRagdoll(false);
     }
 
@@ -21,6 +27,7 @@ public class RagDoll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetRagdoll(true);
+            //Debug.Log();
         }
     }
 
