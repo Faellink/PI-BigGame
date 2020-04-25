@@ -297,6 +297,7 @@ public class PlayerController : MonoBehaviour
     {
 
         SavingCidadao cidadaoScrpt = cidadao.GetComponent<SavingCidadao>();
+        //cidadao.GetComponent<SavingCidadao>();
 
         if (cidadaoScrpt.cidadaoNoOmbro == true)
         {

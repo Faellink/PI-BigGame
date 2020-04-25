@@ -17,6 +17,7 @@ public class SavingCidadao : MonoBehaviour
     void Awake()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        ombro = GameObject.FindGameObjectWithTag("Ombro").GetComponent<Transform>();
     }
 
 
