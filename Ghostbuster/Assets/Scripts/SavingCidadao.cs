@@ -7,6 +7,21 @@ public class SavingCidadao : MonoBehaviour
 
     public Transform ombro;
 
+<<<<<<< HEAD
+=======
+    public PlayerController playerController;
+
+    public bool cidadaoNoOmbro;
+
+
+    void Awake()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
+
+
+
+>>>>>>> parent of c4dfbfe... cidadao saving
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +31,41 @@ public class SavingCidadao : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
         
+=======
+
+        if (playerController.carregarCidadao == true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                GetComponent<CapsuleCollider>().enabled = false;
+                GetComponent<Rigidbody>().useGravity = false;
+                GetComponent<Rigidbody>().freezeRotation = true;
+                this.transform.position = ombro.position;
+                this.transform.parent = GameObject.Find("Ombro").transform;
+                Carregado();
+                cidadaoNoOmbro = true;
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                this.transform.parent = null;
+                GetComponent<Rigidbody>().freezeRotation = false;
+                GetComponent<Rigidbody>().useGravity = true;
+                GetComponent<CapsuleCollider>().enabled = true;
+                Jogado();
+                cidadaoNoOmbro = false;
+            }
+
+        }
+
+        if (playerController.carregarCidadao == false)
+        {
+            cidadaoNoOmbro = false;
+        }
+
+>>>>>>> parent of c4dfbfe... cidadao saving
     }
 
      void OnMouseDown()
@@ -49,4 +98,8 @@ public class SavingCidadao : MonoBehaviour
         //this.transform.Rotate(90.0f, 0.0f, 0.0f, Space.Self);
         this.transform.up = ombro.up;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of c4dfbfe... cidadao saving
 }
