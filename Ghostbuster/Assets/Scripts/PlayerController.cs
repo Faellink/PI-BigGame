@@ -35,18 +35,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
     public float gravity = -9.81f;
 
-    public bool resetGravityExecuted;
-
     GameObject cidadao;
     public Transform carregandoCidadaoOmbro;
-
-    //
-
-    public GameObject cidadaoPrefab;
-    public float forcaJogar;
-    public bool carregarCidadao;
-
-    SavingCidadao cidadaoScrpt;
 
     Vector3 reversedMove;
 
@@ -125,13 +115,13 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("Hook02");
         }
-        
+
         if (Input.GetMouseButtonDown(2))
         {
             Debug.Break();
         }
 
-        JogandoCidadao();
+        
 
     }
 
@@ -184,7 +174,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(characterVelocityMomentum);
         //Debug.Log(characterVelocityMomentum.magnitude);
 
-        //Debug.Log(gravity);
+        //Debug.Log(move.y);
         //Debug.Log(moveY);
     }
 
@@ -198,8 +188,6 @@ public class PlayerController : MonoBehaviour
         {
             hookshotEnabled = false;
         }
-
-        Debug.DrawRay(transform.position,  playerCamera.transform.forward* hookshotRange, Color.red);
 
         if (TestInputHookshot())
         {
@@ -288,51 +276,6 @@ public class PlayerController : MonoBehaviour
     private void ResetGravity()
     {
         moveY = 0f;
-        //Debug.Log("reset gravity executed");
-    }
-
-    //
-
-    void JogandoCidadao()
-    {
-
-        SavingCidadao cidadaoScrpt = cidadao.GetComponent<SavingCidadao>();
-        //cidadao.GetComponent<SavingCidadao>();
-
-        if (cidadaoScrpt.cidadaoNoOmbro == true)
-        {
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
-
-                Destroy(cidadao);
-
-                GameObject cidadaoPrefabInst = Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity) as GameObject;
-
-                Rigidbody[] cidadaoRB = cidadaoPrefabInst.GetComponentsInChildren<Rigidbody>();
-                foreach (var rigidbody in cidadaoRB)
-                {
-                    rigidbody.AddForce(Camera.main.transform.forward * forcaJogar);
-                }
-
-            }
-        }
-            
-
-        /*if (Input.GetKeyDown(KeyCode.Q))
-        {
-            //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
-
-            GameObject cidadaoPrefabInst = Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity) as GameObject;
-
-            Rigidbody[] cidadaoRB = cidadaoPrefabInst.GetComponentsInChildren<Rigidbody>();
-            foreach (var rigidbody in cidadaoRB)
-            {
-                rigidbody.AddForce(Camera.main.transform.forward * forcaJogar);
-            }
-
-        }*/
     }
 
     void SavingCidadao()
@@ -380,18 +323,7 @@ public class PlayerController : MonoBehaviour
         {
             cidadao = other.gameObject;
 
-            carregarCidadao = true;
-
             Debug.Log("encostou cidadao");
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Cidadao"))
-        {
-            carregarCidadao = false;
-        }
-    }
-
 }
