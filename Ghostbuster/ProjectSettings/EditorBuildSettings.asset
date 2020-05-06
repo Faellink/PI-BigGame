@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Hook02.unity
     guid: fac3f732db48e7847ac65e2242f80f34
+  - enabled: 1
+    path: Assets/Scenes/HookRafael.unity
+    guid: 1e45b842a93bbe74ea42136e8a62c9b2
   m_configObjects: {}

@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     public float forcaJogar;
     public bool carregarCidadao;
 
-    SavingCidadao cidadaoScrpt;
+    [SerializeField]SavingCidadao cidadaoScrpt;
 
     Vector3 reversedMove;
 
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("Hook02");
+            SceneManager.LoadScene("HookRafael");
         }
         
         if (Input.GetMouseButtonDown(2))
@@ -296,9 +296,38 @@ public class PlayerController : MonoBehaviour
     void JogandoCidadao()
     {
 
-        SavingCidadao cidadaoScrpt = cidadao.GetComponent<SavingCidadao>();
+        //cidadaoScrpt = cidadao.GetComponent<SavingCidadao>();
 
-        if (cidadaoScrpt.cidadaoNoOmbro == true)
+        if (cidadao == null)
+        {
+            cidadaoScrpt = null;
+        }
+        else
+        {
+            cidadaoScrpt = cidadao.GetComponent<SavingCidadao>();
+
+            if (cidadaoScrpt.cidadaoNoOmbro == true)
+            {
+
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
+
+                    Destroy(cidadao);
+
+                    GameObject cidadaoPrefabInst = Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity) as GameObject;
+
+                    Rigidbody[] cidadaoRB = cidadaoPrefabInst.GetComponentsInChildren<Rigidbody>();
+                    foreach (var rigidbody in cidadaoRB)
+                    {
+                        rigidbody.AddForce(Camera.main.transform.forward * forcaJogar);
+                    }
+
+                }
+            }
+        }
+
+        /*if (cidadaoScrpt.cidadaoNoOmbro == true)
         {
 
             if (Input.GetKeyDown(KeyCode.Q))
@@ -316,7 +345,7 @@ public class PlayerController : MonoBehaviour
                 }
 
             }
-        }
+        }*/
             
 
         /*if (Input.GetKeyDown(KeyCode.Q))
