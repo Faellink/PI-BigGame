@@ -27,6 +27,7 @@ public class SavingCounter : MonoBehaviour
         if (other.gameObject.CompareTag("Cidadao"))
         {
             savingNumber++;
+            Destroy(other.gameObject);
             Debug.Log("Salvou");
         }
     }

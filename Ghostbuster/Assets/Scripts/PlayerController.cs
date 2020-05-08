@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     //
 
     public GameObject cidadaoPrefab;
-    public float forcaJogar;
+    public float forcaJogar = 0f;
     public bool carregarCidadao;
 
     [SerializeField]SavingCidadao cidadaoScrpt;
@@ -81,29 +81,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance , groundMask);
 
-        if(isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-        }
-
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
-        */
         switch (state)
         {
             default:
@@ -139,24 +117,14 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        /*if (isGrounded && move.y < 0)
-        {
-            move.y = -2f;
-        }*/
-
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
-
-        //Vector3 move = transform.right * x * speed + transform.forward * z * speed;
-        //controller.Move(move * speed * Time.deltaTime);
 
         move = transform.right * x * speed + transform.forward * z * speed;
 
         if (isGrounded)
         {
             moveY = 0f;
-            //velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);//
             if (TestInputJump())
             {
                 moveY = jumpForce;
@@ -181,11 +149,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //Debug.Log(characterVelocityMomentum);
-        //Debug.Log(characterVelocityMomentum.magnitude);
-
-        //Debug.Log(gravity);
-        //Debug.Log(moveY);
     }
 
     private void HookshotStart()
@@ -219,7 +182,6 @@ public class PlayerController : MonoBehaviour
     {
         hookshotTransform.LookAt(hookshotPosition);
 
-        //float hookshotThrowSpeed = 150f;
         hookshotSize += hookshotThrowSpeed * Time.deltaTime;
         hookshotTransform.localScale = new Vector3(1,1, hookshotSize);
 
@@ -296,8 +258,6 @@ public class PlayerController : MonoBehaviour
     void JogandoCidadao()
     {
 
-        //cidadaoScrpt = cidadao.GetComponent<SavingCidadao>();
-
         if (cidadao == null)
         {
             cidadaoScrpt = null;
@@ -311,7 +271,6 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
 
                     Destroy(cidadao);
 
@@ -327,40 +286,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        /*if (cidadaoScrpt.cidadaoNoOmbro == true)
-        {
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
-
-                Destroy(cidadao);
-
-                GameObject cidadaoPrefabInst = Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity) as GameObject;
-
-                Rigidbody[] cidadaoRB = cidadaoPrefabInst.GetComponentsInChildren<Rigidbody>();
-                foreach (var rigidbody in cidadaoRB)
-                {
-                    rigidbody.AddForce(Camera.main.transform.forward * forcaJogar);
-                }
-
-            }
-        }*/
-            
-
-        /*if (Input.GetKeyDown(KeyCode.Q))
-        {
-            //Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity);
-
-            GameObject cidadaoPrefabInst = Instantiate(cidadaoPrefab, carregandoCidadaoOmbro.position, Quaternion.identity) as GameObject;
-
-            Rigidbody[] cidadaoRB = cidadaoPrefabInst.GetComponentsInChildren<Rigidbody>();
-            foreach (var rigidbody in cidadaoRB)
-            {
-                rigidbody.AddForce(Camera.main.transform.forward * forcaJogar);
-            }
-
-        }*/
     }
 
     void SavingCidadao()
