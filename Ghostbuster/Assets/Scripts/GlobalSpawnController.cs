@@ -44,6 +44,15 @@ public class GlobalSpawnController : MonoBehaviour
         if (savingCounter.savingNumber == globalSpawnCounterLimit )
         {
             Debug.Log("salvou todo mundo");
+
+            foreach (SpawnCidadao spawnContr in spawnControladores)
+            {
+                savingCounter.savingNumber = 0;
+                spawnContr.startSpawn = true;
+                spawnContr.spawnCounter = 0;
+                spawnContr.StartCoroutine(spawnContr.Spawner(spawnContr.spawnRate));
+            }
+
         }
 
         if (Input.GetKeyDown(KeyCode.K))

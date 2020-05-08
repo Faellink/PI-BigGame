@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 6609520414059424877}
   - component: {fileID: 8091012238065133561}
   m_Layer: 0
-  m_Name: ybot
+  m_Name: CidadaoPrefab
   m_TagString: Cidadao
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

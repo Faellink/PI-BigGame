@@ -39,12 +39,6 @@ public class SpawnCidadao : MonoBehaviour
             //Debug.Log("limite de cidadao");
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            startSpawn = true;
-            spawnCounter = 0;
-            StartCoroutine(Spawner(spawnRate));
-        }
     }
 
     public IEnumerator Spawner(float spawnRate)

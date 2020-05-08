@@ -31,6 +31,12 @@ public class SavingCidadao : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (cidadaoNoOmbro == true)
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
+
         if (this.pegou == true)
         {
             if (playerController.carregarCidadao == true)
@@ -76,6 +82,7 @@ public class SavingCidadao : MonoBehaviour
     void Jogado()
     {
         this.transform.up = ombro.up;
+        GetComponent<Rigidbody>().isKinematic = false;
         this.pegou = false;
     }
 

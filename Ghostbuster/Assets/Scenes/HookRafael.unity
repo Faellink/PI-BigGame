@@ -2489,6 +2489,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: cidade
       objectReference: {fileID: 0}
+    - target: {fileID: 4222201377863621978, guid: d2ed30943ccb7154ea11816902057642,
+        type: 3}
+      propertyPath: m_TagString
+      value: GlobalSpawn
+      objectReference: {fileID: 0}
     - target: {fileID: 6140506106011798630, guid: d2ed30943ccb7154ea11816902057642,
         type: 3}
       propertyPath: m_Name
@@ -3871,7 +3876,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -4747,10 +4752,10 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Pessoas Salvas:'
+  m_Text: 'Pesoas Salvas: 0/0Total:0'
 --- !u!222 &1790256487
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5326,7 +5331,7 @@ PrefabInstance:
     - target: {fileID: 1447714357305619205, guid: a5d3eb07acb646249a46eb31c703f2c8,
         type: 3}
       propertyPath: forcaJogar
-      value: 200
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 1447714357305619227, guid: a5d3eb07acb646249a46eb31c703f2c8,
         type: 3}
