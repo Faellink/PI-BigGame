@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform debugHitPointTransform;
     [SerializeField] private Transform hookshotTransform;
 
-    [SerializeField]private const float NORMAL_FOV = 60f;
-    [SerializeField]private const float HOOKSHOT_FOV = 120f;
+    [SerializeField] private const float NORMAL_FOV = 60f;
+    [SerializeField] private const float HOOKSHOT_FOV = 120f;
 
     public ParticleSystem speedLinesParticleSystem;
     public CharacterController controller;
@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
     public float hookshotThrowSpeed = 150f;
 
+    //
+
+    public bool isParede;
+    public Transform paredeCheck;
+    public float paredeDistance = 0.8f;
+
     public float groundDistance = 0.4f;
     bool isGrounded;
 
@@ -28,12 +34,15 @@ public class PlayerController : MonoBehaviour
 
     float moveY;
 
+    float moveZ;
+
     private float hookshotSize;
 
     public float jumpSpeed = 40f;
     public float jumpForce = 3f;
     public float speed = 10f;
-    public float gravity = -9.81f;
+    public float gravity = -85f;
+    //gravidade no inspector
 
     public bool resetGravityExecuted;
 
@@ -42,13 +51,21 @@ public class PlayerController : MonoBehaviour
 
     //
 
+    public float wallJumpForce = 0f;
+    public float wallJumpDrag = -10f;
+
+    // 
+
     public GameObject cidadaoPrefab;
     public float forcaJogar = 0f;
     public bool carregarCidadao;
 
-    [SerializeField]SavingCidadao cidadaoScrpt;
+    [SerializeField] SavingCidadao cidadaoScrpt;
 
     Vector3 reversedMove;
+
+    public Transform impactPoint;
+    public bool bateuPredio;
 
     Vector3 move;
     Vector3 velocity;
@@ -75,7 +92,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -96,14 +113,13 @@ public class PlayerController : MonoBehaviour
             case State.HookshotFlyingPlayer:
                 HookshotMovement();
                 break;
-
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("HookRafael");
         }
-        
+
         if (Input.GetMouseButtonDown(2))
         {
             Debug.Break();
@@ -117,10 +133,13 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
+        isParede = Physics.CheckCapsule(paredeCheck.position, new Vector3(paredeCheck.position.x, paredeCheck.position.y + 0.5f, paredeCheck.position.z), paredeDistance, groundMask);
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         move = transform.right * x * speed + transform.forward * z * speed;
+
 
         if (isGrounded)
         {
@@ -131,11 +150,41 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (isParede)
+        {
+            moveY = 0f;
+            gravity = 0f;
+            if (TestInputJump())
+            {
+                moveY = jumpForce;
+                moveZ = jumpForce;
+
+                move.z = moveZ;
+
+            }
+        }
+        else
+        {
+            gravity = -85f;
+        }
+
         moveY += gravity * Time.deltaTime;
 
         move.y = moveY;
 
         move += characterVelocityMomentum;
+
+
+        Vector3 diagonal = transform.forward + transform.up;
+        Vector3 diagonalTste = new Vector3(0f, 10f, 20f);
+            
+
+        Debug.DrawRay(transform.position, diagonalTste, Color.red, 10f);
+        Debug.DrawRay(transform.position, diagonal, Color.yellow, 10f);
+        
+        //move.y = moveY;
+
+        //move += characterVelocityMomentum;
 
         controller.Move(move * Time.deltaTime);
 
@@ -153,7 +202,7 @@ public class PlayerController : MonoBehaviour
 
     private void HookshotStart()
     {
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, hookshotRange))
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, hookshotRange))
         {
             hookshotEnabled = true;
         }
@@ -162,11 +211,11 @@ public class PlayerController : MonoBehaviour
             hookshotEnabled = false;
         }
 
-        Debug.DrawRay(transform.position,  playerCamera.transform.forward* hookshotRange, Color.red);
+        Debug.DrawRay(transform.position, playerCamera.transform.forward * hookshotRange, Color.red);
 
         if (TestInputHookshot())
         {
-            if(Physics.Raycast(playerCamera.transform.position , playerCamera.transform.forward, out RaycastHit raycastHit))
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit raycastHit))
             {
                 debugHitPointTransform.position = raycastHit.point;
                 hookshotPosition = raycastHit.point;
@@ -183,7 +232,7 @@ public class PlayerController : MonoBehaviour
         hookshotTransform.LookAt(hookshotPosition);
 
         hookshotSize += hookshotThrowSpeed * Time.deltaTime;
-        hookshotTransform.localScale = new Vector3(1,1, hookshotSize);
+        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
 
         if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
         {
@@ -245,6 +294,11 @@ public class PlayerController : MonoBehaviour
     private bool TestInputJump()
     {
         return Input.GetKeyDown(KeyCode.Space);
+    }
+
+    bool TestJumpHold()
+    {
+        return Input.GetKey(KeyCode.Space);
     }
 
     private void ResetGravity()
@@ -325,7 +379,24 @@ public class PlayerController : MonoBehaviour
                 //Debug.Break();
             }
         }
+
+        if (hit.gameObject.CompareTag("Predio"))
+        {
+            impactPoint.position = hit.point;
+
+            bateuPredio = true;
+
+            //gravity = 0f;
+            //moveY = 0f;
+            //characterVelocityMomentum = Vector3.zero;
+        }
+        else
+        {
+            bateuPredio = false;
+        }
+
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -345,6 +416,15 @@ public class PlayerController : MonoBehaviour
         {
             carregarCidadao = false;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(groundCheck.position, groundDistance);
+
+        Gizmos.DrawSphere(paredeCheck.position, paredeDistance);
+
     }
 
 }

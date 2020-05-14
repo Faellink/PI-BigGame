@@ -8,6 +8,7 @@ TagManager:
   - HQ
   - Ombro
   - GlobalSpawn
+  - Predio
   layers:
   - Default
   - TransparentFX
