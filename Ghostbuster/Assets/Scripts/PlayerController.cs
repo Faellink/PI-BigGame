@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     //
 
+    public bool pulouParede;
     public bool isParede;
     public Transform paredeCheck;
     public float paredeDistance = 0.8f;
@@ -33,8 +34,8 @@ public class PlayerController : MonoBehaviour
     public bool hookshotEnabled;
 
     float moveY;
-
-    float moveZ;
+    public float tempo;
+    public float moveZ;
 
     private float hookshotSize;
 
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
         speedLinesParticleSystem = GetComponentInChildren<ParticleSystem>();
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
+        pulouParede = false;
     }
 
     // Start is called before the first frame update
@@ -157,16 +159,29 @@ public class PlayerController : MonoBehaviour
             if (TestInputJump())
             {
                 moveY = jumpForce;
-                moveZ = jumpForce;
+                moveZ = wallJumpForce;
+               // moveZ += wallJumpDrag * Time.deltaTime;
+                pulouParede = true;
+            }
 
-                move.z = moveZ;
-
+            if (Input.GetKey(KeyCode.Space))
+            {
+                moveY = jumpForce;
+                moveZ = wallJumpForce;
+                moveZ += wallJumpDrag * Time.deltaTime;
+                pulouParede = true;
             }
         }
         else
         {
             gravity = -85f;
+        }        
+
+        if (moveZ <= 0 && pulouParede)
+        {
+            Debug.Log("zerou");
         }
+        //Debug.Log();
 
         moveY += gravity * Time.deltaTime;
 

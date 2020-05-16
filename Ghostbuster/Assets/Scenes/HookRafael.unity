@@ -6462,6 +6462,16 @@ PrefabInstance:
       propertyPath: wallJumpForce
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 1447714357305619205, guid: a5d3eb07acb646249a46eb31c703f2c8,
+        type: 3}
+      propertyPath: tempo
+      value: -14.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1447714357305619205, guid: a5d3eb07acb646249a46eb31c703f2c8,
+        type: 3}
+      propertyPath: wallJumpDrag
+      value: -50
+      objectReference: {fileID: 0}
     - target: {fileID: 1447714357305619226, guid: a5d3eb07acb646249a46eb31c703f2c8,
         type: 3}
       propertyPath: m_SlopeLimit
