@@ -7,28 +7,79 @@ public class AImoveCtrlr : MonoBehaviour
 {
     public GameObject targetObject;
     NavMeshAgent agentAI;
-
-    public int aiNumber;
-
+    public float maxSphereRadius,rayLength, maxSightAngle;
+    private Vector3 wanderToPos;
+    private bool seeChar,clean;
 
     // Start is called before the first frame update
     void Start()
     {
         agentAI = GetComponent<NavMeshAgent>();
-        aiNumber = 0;
+        wanderToPos = SeeRandomPointInSpace();
+        seeChar = false;
+
     }
 
-    void SetAiActions()
+    private void OnDrawGizmos() 
     {
-        if(aiNumber == 1)
+        Gizmos.color= new Color (1,1,0,0.2f);
+        Gizmos.DrawSphere(transform.position,maxSphereRadius);
+    }
+
+    void OnTriggerEnter(Collider other) 
+    {
+        if(other.CompareTag("Cupcake") == true)
         {
-            targetObject = GameObject.FindGameObjectWithTag("Player");
+            targetObject = GameObject.FindGameObjectWithTag("Char");
+            SeeTargetCharacter();
         }
     }
 
+    public Vector3 SeeRandomPointInSpace()
+    {
+        Vector3 randomPoint = (Random.insideUnitSphere*maxSphereRadius)+transform.position;
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(randomPoint,out navHit,maxSphereRadius,-1);
+        return new Vector3(navHit.position.x,transform.position.y,navHit.position.z);
+    }
+
+    void RoamToPoint()
+    {
+        if(Vector3.Distance(transform.position,wanderToPos)<2f)
+        {
+            wanderToPos = SeeRandomPointInSpace();
+        }else
+        {
+            agentAI.SetDestination(wanderToPos);
+        }
+    }
+
+    void SeeTargetCharacter()
+    {
+        seeChar = true;
+        this.gameObject.tag = "Inimigo";
+    }
     // Update is called once per frame
     void Update()
     {
-        agentAI.SetDestination(targetObject.transform.position);
+        RoamToPoint(); 
+
+        RaycastHit rayHit;
+        Physics.Raycast(this.transform.position, this.transform.right, out rayHit, rayLength);
+
+        if(rayHit.collider.CompareTag("Char")||rayHit.collider.CompareTag("Player"))
+        {
+            Destroy(rayHit.collider.gameObject);
+        }
+        
+        if(this.gameObject.CompareTag("Inimigo"))
+        {
+            agentAI.SetDestination(targetObject.transform.position);
+        
+        }else 
+        {
+        RoamToPoint();
+        this.gameObject.tag = "Cidadao";
+        }
     }
 }

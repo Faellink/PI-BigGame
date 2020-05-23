@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cidadao
   - Inimigo
+  - Cupcake
   layers:
   - Default
   - TransparentFX

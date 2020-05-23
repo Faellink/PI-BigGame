@@ -11,8 +11,8 @@ public class NewDestination : MonoBehaviour
     {
         if (other.CompareTag("Cidadao"))
         {
-            posX = Random.Range(100,400);
-            posZ = Random.Range(100,400);
+            posX = Random.Range(200,200);
+            posZ = Random.Range(200,200);
             this.gameObject.transform.position = new Vector3 (posX,transform.position.y,posZ);
         }
     }
