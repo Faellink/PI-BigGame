@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SavingCounter : MonoBehaviour
 {
-    Text savingCounter;
+    public Text savingCounter;
 
     GlobalSpawnController globalSpawnController;
 
