@@ -28,11 +28,11 @@ public class AImoveCtrlr : MonoBehaviour
 
     void OnTriggerEnter(Collider other) 
     {
-        if(other.CompareTag("Cupcake") == true)
+       /* if(other.CompareTag("Cupcake") == true)
         {
             targetObject = GameObject.FindGameObjectWithTag("Char");
             SeeTargetCharacter();
-        }
+        }*/
     }
 
     public Vector3 SeeRandomPointInSpace()

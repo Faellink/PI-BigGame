@@ -14,15 +14,24 @@ public class AIBehaviour : MonoBehaviour
 
     public float runSpeed;
 
-    private Transform target;
+    //private Transform target;
     private NavMeshAgent agent;
     private float timer;
 
     public bool foundPlayer;
+    public bool foundTarget;
     public LayerMask playerLayer;
+    public LayerMask targetLayer;
+
+    SkinnedMeshRenderer[] skinnedMeshes;
+
+
+    Collider[] targetsColliders;
+    List<GameObject> targetsObjectList = new List<GameObject>();
 
     PlayerController playerController;
     private State state;
+
 
     private enum State
     {
@@ -30,15 +39,19 @@ public class AIBehaviour : MonoBehaviour
         Wander,
         Escaping,
         Agressive,
+        Waiting,
     }
 
 
     private void Start()
     {
+        skinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         agent = GetComponent<NavMeshAgent>();
         state = State.Wander;
         timer = wanderTimer;
+        //
+        //state = State.Waiting;
     }
 
 
@@ -55,12 +68,18 @@ public class AIBehaviour : MonoBehaviour
                 Escaping();
                 break;
             case State.Agressive:
+                //FollowTarget();
+                break;
+            case State.Waiting:
+                IsWaiting();
                 break;
             case State.Saved:
                 break;
         }
 
         foundPlayer = Physics.CheckSphere(transform.position, wanderRadius, playerLayer);
+        //foundTarget = Physics.CheckSphere(transform.position, wanderRadius, targetLayer);
+        SearchTarget();
 
     }
 
@@ -79,6 +98,7 @@ public class AIBehaviour : MonoBehaviour
         {
             state = State.Escaping;
         }
+
     }
 
     void Escaping()
@@ -97,6 +117,32 @@ public class AIBehaviour : MonoBehaviour
         }
     }
 
+    void SearchTarget()
+    {
+        targetsColliders = Physics.OverlapSphere(transform.position, wanderRadius, targetLayer);
+        foreach (Collider targetCollider in targetsColliders)
+        {
+            if (!targetsObjectList.Contains(targetCollider.gameObject))
+            {
+                targetsObjectList.Add(targetCollider.gameObject);
+            }
+        }
+
+        if (targetsColliders.Length == 0)
+        {
+            targetsObjectList.Clear();
+        }
+        else if (targetsColliders.Length > 0)
+        {
+            agent.SetDestination(targetsObjectList[0].transform.position);
+        }
+    }
+
+    void IsWaiting()
+    {
+        agent.Stop();
+    }
+
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
         Vector3 randDirection = Random.insideUnitSphere * dist;
@@ -110,6 +156,17 @@ public class AIBehaviour : MonoBehaviour
         return navHit.position;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            /*foreach(SkinnedMeshRenderer skin in skinnedMeshes)
+            {
+                skin.enabled = false;
+            }*/
+
+        }
+    }
 
 
 }
