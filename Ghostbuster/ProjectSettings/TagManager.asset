@@ -9,6 +9,7 @@ TagManager:
   - Ombro
   - GlobalSpawn
   - Predio
+  - Button
   layers:
   - Default
   - TransparentFX
