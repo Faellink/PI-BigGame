@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class Title : MonoBehaviour
 {
 
-    public Scene level;
+    public int levelNumber;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,7 @@ public class Title : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     void EncimaButton()
@@ -30,8 +31,14 @@ public class Title : MonoBehaviour
         }
     }
 
-    void PlayGame()
+    public void PlayGame()
     {
+        SceneManager.LoadScene(levelNumber);
+    }
 
+    public void QuitGame()
+    {
+        Debug.Log("quit");
+        Application.Quit();
     }
 }

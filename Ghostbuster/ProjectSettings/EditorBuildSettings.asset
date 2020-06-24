@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HookRafael.unity
     guid: 1e45b842a93bbe74ea42136e8a62c9b2
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: b11f724ebcfde2945aa853ee6188e1e4
   m_configObjects: {}
