@@ -1843,7 +1843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &422601448
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7650,6 +7650,11 @@ PrefabInstance:
       propertyPath: debugHitPointTransform
       value: 
       objectReference: {fileID: 1543737804}
+    - target: {fileID: 1447714357305619205, guid: a5d3eb07acb646249a46eb31c703f2c8,
+        type: 3}
+      propertyPath: hookshotAnim
+      value: 
+      objectReference: {fileID: 422601447}
     - target: {fileID: 1447714357305619227, guid: a5d3eb07acb646249a46eb31c703f2c8,
         type: 3}
       propertyPath: m_LocalPosition.x

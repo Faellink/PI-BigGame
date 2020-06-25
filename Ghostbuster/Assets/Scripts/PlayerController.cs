@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
     Vector3 characterVelocityMomentum;
     Vector3 hookshotPosition;
 
+    public GameObject hookshotAnim;
+
     private State state;
 
     private enum State
@@ -107,12 +109,15 @@ public class PlayerController : MonoBehaviour
             case State.Normal:
                 Movement();
                 HookshotStart();
+                hookshotAnim.SetActive(false);
                 break;
             case State.HookshotThrown:
+                hookshotAnim.SetActive(false);
                 HandleHookshotThrow();
                 Movement();
                 break;
             case State.HookshotFlyingPlayer:
+                hookshotAnim.SetActive(true);
                 HookshotMovement();
                 break;
         }
