@@ -14,13 +14,15 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused == true)
