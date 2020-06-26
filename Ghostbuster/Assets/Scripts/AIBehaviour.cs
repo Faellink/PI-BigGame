@@ -23,6 +23,8 @@ public class AIBehaviour : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask targetLayer;
 
+   public  Animator cidadaoAnim;
+
     SkinnedMeshRenderer[] skinnedMeshes;
 
 
@@ -45,6 +47,7 @@ public class AIBehaviour : MonoBehaviour
 
     private void Start()
     {
+        cidadaoAnim = GetComponent<Animator>();
         skinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         agent = GetComponent<NavMeshAgent>();
@@ -78,8 +81,10 @@ public class AIBehaviour : MonoBehaviour
         }
 
         foundPlayer = Physics.CheckSphere(transform.position, wanderRadius, playerLayer);
-        //foundTarget = Physics.CheckSphere(transform.position, wanderRadius, targetLayer);
+        foundTarget = Physics.CheckSphere(transform.position, wanderRadius, targetLayer);
         SearchTarget();
+
+        Debug.Log(agent.velocity.magnitude);
 
     }
 
@@ -115,6 +120,7 @@ public class AIBehaviour : MonoBehaviour
         {
             state = State.Wander;
         }
+
     }
 
     void SearchTarget()
