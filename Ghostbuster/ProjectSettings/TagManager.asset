@@ -10,6 +10,7 @@ TagManager:
   - GlobalSpawn
   - Predio
   - Button
+  - Fire
   layers:
   - Default
   - TransparentFX

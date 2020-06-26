@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SavingCounter : MonoBehaviour
 {
     public Text savingCounter;
+    public TextMeshProUGUI savingCounterTmpro;
 
     GlobalSpawnController globalSpawnController;
 
@@ -16,6 +18,7 @@ public class SavingCounter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        savingCounterTmpro = GameObject.Find("Saving Counter Text (TMP)").GetComponent<TextMeshProUGUI>();
         savingCounter = GameObject.Find("SavingCounter").GetComponent<Text>();
         globalSpawnController = GameObject.FindGameObjectWithTag("GlobalSpawn").GetComponent<GlobalSpawnController>();
         savingNumber = 0;
@@ -25,6 +28,7 @@ public class SavingCounter : MonoBehaviour
     void Update()
     {
         savingCounter.text = "Pesoas Salvas: " + savingNumber + "/" + globalSpawnController.globalSpawnCounterLimit + "Total: " + savingNumberTotal;
+        savingCounterTmpro.text = "Pesoas Salvas:" + savingNumber + "/ " + globalSpawnController.globalSpawnCounterLimit + "Total:" + savingNumberTotal;
     }
 
     private void OnTriggerEnter(Collider other)

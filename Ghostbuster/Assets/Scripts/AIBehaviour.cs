@@ -14,6 +14,8 @@ public class AIBehaviour : MonoBehaviour
 
     public float runSpeed;
 
+    public float velocity;
+
     //private Transform target;
     private NavMeshAgent agent;
     private float timer;
@@ -23,7 +25,7 @@ public class AIBehaviour : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask targetLayer;
 
-   public  Animator cidadaoAnim;
+    public Animator cidadaoAnim;
 
     SkinnedMeshRenderer[] skinnedMeshes;
 
@@ -84,8 +86,21 @@ public class AIBehaviour : MonoBehaviour
         foundTarget = Physics.CheckSphere(transform.position, wanderRadius, targetLayer);
         SearchTarget();
 
-        Debug.Log(agent.velocity.magnitude);
 
+        velocity = agent.velocity.magnitude / agent.speed;
+        //Debug.Log(velocity);
+        cidadaoAnim.SetFloat("WalkRun", velocity);
+
+        if (foundPlayer || foundTarget)
+        {
+            cidadaoAnim.SetBool("isRuning", true);
+        }
+        else
+        {
+            cidadaoAnim.SetBool("isRuning", false);
+        }
+       
+        
     }
 
     void Wander()
