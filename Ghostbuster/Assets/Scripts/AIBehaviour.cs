@@ -8,6 +8,8 @@ public class AIBehaviour : MonoBehaviour
 {
 
     //NavMeshAgent cidadaoAi;
+    public bool hostile;
+    public bool aggressive;
 
     public float wanderRadius;
     public float wanderTimer;
@@ -37,6 +39,7 @@ public class AIBehaviour : MonoBehaviour
     private State state;
 
 
+    public int overrideState = -1;
     private enum State
     {
         Saved,
@@ -63,6 +66,10 @@ public class AIBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(overrideState != -1)
+        {
+            state = (State)overrideState;
+        }
         switch (state)
         {
             default:

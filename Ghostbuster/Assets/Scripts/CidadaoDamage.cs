@@ -9,6 +9,7 @@ public class CidadaoDamage : MonoBehaviour
     public Image life;
     public bool damageOn;
     public float timer = 30.0f;
+    public float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +42,8 @@ public class CidadaoDamage : MonoBehaviour
         }
     }
 
-    void DamageTimer()
+    public void DamageTimer()
     {
-        life.fillAmount -= 1.0f / timer * Time.deltaTime;
+        life.fillAmount -=0.1f;/// timer * Time.deltaTime;
     }
 }
