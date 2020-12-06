@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class ZombieAI : MonoBehaviour
 {
+    public float distTarget;
+    public float distChaser;
     public enum AIState
     {
         Idle,
@@ -13,23 +15,27 @@ public class ZombieAI : MonoBehaviour
         Chasing,
         Dead
     }
+    public ZombieAI chaser;
     public Transform currentTarget;
     public AIState currState;
     [Header("Movement")]
     public float runSpeed;
-
-    public bool aggressive;
+    public float walkSpeed;
+    public bool hostile; // is enemy or neutral
+    public bool aggressive; // will flee or chase player
 
     private NavMeshAgent agent;
 
     [Header("Targeting")]
     public float aggroRange;
+    public float loseAggroRange;
     public float attackRange;
 
     public bool foundPlayer;
     public bool foundTarget;
     public LayerMask playerLayer;
     public LayerMask targetLayer;
+    public float ang;
 
     public Animator anim;
 
@@ -56,15 +62,19 @@ public class ZombieAI : MonoBehaviour
 
     }
     private float stopIdleTime;
+    public float idleTimeRemaining;
     [Header("Attacking")]
+    public bool canAttack;
     public float attackCooldownTime;
     public bool attacking;
     private float endAttackCooldownTime;
+    public float attackPreventionTime;
+    private float stopPrevention;
 
     [Header("Health")]
     public int health = 1;
     public bool stunned;
-
+    public int enemyHealth = 1;
     public Transform suckEffect;
     private void Start()
     {
@@ -72,6 +82,28 @@ public class ZombieAI : MonoBehaviour
     }
     private void Update()
     {
+
+        if(currentTarget != null)
+            distTarget = Vector3.Distance(currentTarget.position, transform.position);
+        if(currState == AIState.Dead)
+        {
+            agent.isStopped = true;
+            GetComponent<Collider>().enabled = false;
+            this.enabled = false;
+            return;
+        }
+
+        if (attacking && currentTarget != null)
+        {
+            // rotate towards target
+            Vector3 delta = currentTarget.position -  transform.position;
+            ang = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
+
+            var euler = transform.localEulerAngles;
+            euler.y = ang;
+            transform.rotation = Quaternion.Euler(euler);
+        }
+
         DecideState();
         switch(currState)
         {
@@ -79,12 +111,15 @@ public class ZombieAI : MonoBehaviour
                 Idle();
                 break;
             case AIState.Wander:
+                agent.speed = walkSpeed;
                 Wander();
                 break;
             case AIState.Fleeing:
+                agent.speed = runSpeed;
                 Flee();
                 break;
             case AIState.Chasing:
+                agent.speed = runSpeed;
                 Chase();
                 break;
             default:
@@ -93,25 +128,85 @@ public class ZombieAI : MonoBehaviour
 
         }
         UpdateAnimator();
+        if(Time.time > stopPrevention)
+        {
+            canAttack = true;
+        }
     }
     void UpdateAnimator()
     {
-        float velocity = agent.velocity.magnitude / agent.speed;
-        anim.SetFloat("WalkRun", velocity);
-        if(currState != AIState.Idle && currState != AIState.Dead)
+        if (hostile)
         {
-            anim.SetBool("isRuning", true);
+            anim.SetBool("Zombie", true);
+            anim.SetFloat("ZombieBlend", 1);
         }
         else
         {
-            anim.SetBool("isRuning", false);
+            anim.SetBool("Zombie", false);
+            anim.SetFloat("ZombieBlend", 0);
         }
+
+        if (currState == AIState.Idle || stunned)
+        {
+            anim.SetBool("Walking", false);
+            anim.SetBool("Running", false);
+            anim.SetBool("RunAway", false);
+        }
+        else
+            anim.SetBool("Walking", true);
+
+        if (currState == AIState.Chasing)
+        {
+            anim.SetBool("Running", true);
+            anim.SetBool("RunAway", false);
+        }
+        else if (currState == AIState.Fleeing)
+        {
+            if (hostile)
+            {
+                anim.SetBool("Running", false);
+                anim.SetBool("RunAway", true);
+            }
+            else
+                anim.SetBool("Running", true);
+        }
+        else
+        {
+            anim.SetBool("Running", false);
+            anim.SetBool("RunAway", false);
+        }
+
     }
     public void DecideState()
-    {       
+    {
+        if (attacking)
+            return;
         // check if player is within aggro range
-        float dist = Vector3.Distance(transform.position, player.transform.position);
-        if (dist < aggroRange)
+        float dist = float.PositiveInfinity;
+        if(currentTarget != null)
+            dist = Vector3.Distance(transform.position, currentTarget.position);
+        float playerDist = Vector3.Distance(transform.position, player.transform.position);      
+        if (chaser != null)
+        {
+            dist = Vector3.Distance(transform.position, chaser.transform.position);
+            distChaser = dist;
+            if(dist > chaser.loseAggroRange || !chaser.hostile)
+            {
+                currState = AIState.Wander;
+                chaser = null;
+                CancelSuck();
+                StopStun();
+                return;
+            }
+            else
+            {
+                currState = AIState.Fleeing;
+                return;
+            }
+        }
+        
+
+        if (playerDist < aggroRange && hostile)
         {
             if (aggressive)
             {
@@ -126,22 +221,48 @@ public class ZombieAI : MonoBehaviour
                 return;
             }
         }
-        dist = float.PositiveInfinity;
-        Transform closest = null;
-        var targetsColliders = Physics.OverlapSphere(transform.position, wanderRadius, targetLayer);
-        foreach(var v in targetsColliders)
+        else if(loseAggroRange < dist && (currState == AIState.Fleeing || currState == AIState.Chasing))
         {
-            float d = Vector3.Distance(v.transform.position, transform.position);
-            if (d < dist)
+            if (currentTarget != null && currentTarget.GetComponent<ZombieAI>() != null)
             {
-                dist = d;
-                closest = v.transform;
+                currentTarget.GetComponent<ZombieAI>().chaser = null;
+                //currentTarget.GetComponent<ZombieAI>().StopStun();
+
             }
+            currState = AIState.Wander;
         }
-        if(closest != null && dist < aggroRange)
+        if (hostile)
         {
-            currState = AIState.Chasing;
-            currentTarget = closest;
+            dist = float.PositiveInfinity;
+            Transform closest = null;
+            var targetsColliders = Physics.OverlapSphere(transform.position, wanderRadius, targetLayer);
+            foreach (var v in targetsColliders)
+            {
+                if (v.GetComponent<ZombieAI>() == null || v.GetComponent<ZombieAI>().hostile || v.GetComponent<ZombieAI>().currState == AIState.Dead)
+                    continue;
+                float d = Vector3.Distance(v.transform.position, transform.position);
+                if (d < dist)
+                {
+                    dist = d;
+                    closest = v.transform;
+                }
+            }
+            if (closest != null && dist < aggroRange)
+            {
+                if(closest != currentTarget && currentTarget !=null )
+                {
+                    if (currentTarget.GetComponent<ZombieAI>() != null)
+                    {
+                        currentTarget.GetComponent<ZombieAI>().chaser = null;
+                    }
+                }
+                currState = AIState.Chasing;
+                currentTarget = closest;
+                if(currentTarget.GetComponent<ZombieAI>() != null)
+                {
+                    currentTarget.GetComponent<ZombieAI>().chaser = this;
+                }
+            }
         }
         // check if idle timer is past
         if (currState == AIState.Idle && Time.time > stopIdleTime)
@@ -151,11 +272,12 @@ public class ZombieAI : MonoBehaviour
             return;
         }
 
+        
     }
 
     public void Idle()
     {
-
+        idleTimeRemaining = stopIdleTime - Time.time;
     }
     public void Wander()
     {
@@ -167,6 +289,10 @@ public class ZombieAI : MonoBehaviour
                 stopIdleTime = Time.time + WanderCooldown;
                 currState = AIState.Idle;
             }
+            else
+            {
+                agent.SetDestination(wanderPosition);
+            }
         }
         else
         {
@@ -174,6 +300,7 @@ public class ZombieAI : MonoBehaviour
             hasWanderPosition = true;
             agent.SetDestination(wanderPosition);
         }
+
     }
     public void Flee()
     {
@@ -186,10 +313,13 @@ public class ZombieAI : MonoBehaviour
             else
                 return;
         }
-        Vector3 destination = transform.position + ((transform.position - currentTarget.position));
-        float distance = Vector3.Distance(transform.position, currentTarget.position);
+        Transform fleeTarget = player.transform;
+        if (chaser != null)
+            fleeTarget = chaser.transform;
+        Vector3 destination = transform.position + ((transform.position - fleeTarget.position).normalized * loseAggroRange );
+        float distance = Vector3.Distance(transform.position, fleeTarget.position);
         agent.SetDestination(destination);
-        if (distance < attackRange)
+        if (hostile && distance < attackRange)
         {
             agent.SetDestination(transform.position);
             endAttackCooldownTime = Time.time + attackCooldownTime;
@@ -198,6 +328,12 @@ public class ZombieAI : MonoBehaviour
     }
     public void Chase()
     {
+        if(currentTarget.GetComponent<ZombieAI>() != null && currentTarget.GetComponent<ZombieAI>().hostile)
+        {
+            currState = AIState.Wander;
+            currentTarget = null;
+            return;
+        }
         if(attacking)
         {
             if (Time.time > endAttackCooldownTime)
@@ -220,15 +356,45 @@ public class ZombieAI : MonoBehaviour
 
     public void Attack()
     {
+        if(!canAttack || stunned)
+        {
+            return;
+        }
+        Debug.Log("attc");
+        stopPrevention = Time.time + attackPreventionTime;
+        canAttack = false;
+        anim.SetTrigger("Attack");
         attacking = true;
-        if(currentTarget.GetComponent<CidadaoDamage>() != null)
+        if(currentTarget == player.transform)
         {
-            currentTarget.GetComponent<CidadaoDamage>().DamageTimer();
+
         }
-        else if(currentTarget == player.transform)
+        else if(currentTarget != null)
         {
-            player.TakeDamage();
+            currentTarget.GetComponent<ZombieAI>().Stun();
+            currentTarget.GetComponent<ZombieAI>().StartSuck();
         }
+    }
+    public void FinishAttack()
+    {
+        if(currentTarget == null || Vector3.Distance(transform.position,currentTarget.position) > attackRange * 1.5f)
+        {
+            return;
+        }
+        if (currentTarget.GetComponent<ZombieAI>() != null)
+        {
+            currentTarget.GetComponent<ZombieAI>().TakeDamage();
+            currentTarget.GetComponent<ZombieAI>().CancelSuck();
+            currentTarget = null;
+            currState = AIState.Wander;
+            return;
+        }
+        else if (currentTarget == player.transform)
+            player.TakeDamage();       
+    }
+    public void EndAttack()
+    {
+        attacking = false;
     }
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask, float minRadius = 0)
     {
@@ -249,20 +415,53 @@ public class ZombieAI : MonoBehaviour
 
     public void TakeDamage()
     {
-        health--;
-        if(health<=0)
+        health--;                
+        //anim.SetTrigger("Hit");
+        hostile = true;
+        chaser = null;
+        StopStun();
+    }
+    public void TakeEnemyDamage()
+    {
+        enemyHealth--;
+        if (enemyHealth <= 0)
         {
-            Destroy(gameObject);
+            attacking = false;
+            currentTarget = null;
+            hostile = false;
+            aggressive = false;
+            anim.SetTrigger("Revert");
+            currState = AIState.Wander;
         }
     }
 
+    public void StartSuck()
+    {
+        anim.SetTrigger("Suck");
+    }
+
+    public void CancelSuck()
+    {
+        anim.SetTrigger("StopSuck");
+    }
+
+    public void EndSuck()
+    {
+        if (enemyHealth <= 0)
+            anim.SetTrigger("Revert");
+        else
+            anim.SetTrigger("StopSuck");
+    }
     public void Stun()
     {
+        Debug.Log("Stunned");
         stunned = true;
         agent.isStopped = true;
     }
     public void StopStun()
-    {
+    { 
+        Debug.Log("Stop Stunned");
+
         stunned = false;
         agent.isStopped = false;
     }

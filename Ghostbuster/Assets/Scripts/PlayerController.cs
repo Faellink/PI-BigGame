@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private const float HOOKSHOT_FOV = 120f;
 
     public ParticleSystem speedLinesParticleSystem;
+    public Animator anim;
     public CharacterController controller;
     public GameObject playerCamera;
     public CameraFov cameraFov;
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour
     [Header("succing")]
     public float radius;
     public float strength;
-    public float falloff;
+    public float falloffDistance;
     public float succAngle;
     public ZombieAI suckingTarget;
     public float timeSucking;
@@ -93,6 +94,11 @@ public class PlayerController : MonoBehaviour
     public float projectileForce;
     public int projectileAmmo;
     public Transform gunPoint;
+    [Header("animation")]
+    public float succAnimationPos;
+    public float shotAnimationPos;
+    public float idleAnimationPos;
+    public Transform gun;
 
     private enum State
     {
@@ -139,30 +145,48 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene("HookRafael");
-        }
 
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Suck();
         }
-        if(Input.GetKey(KeyCode.Alpha4))
+        if(Input.GetKey(KeyCode.Mouse1))
         {
+            anim.SetBool("Sucking", true);
             KeepSucking();
         }
-        if(Input.GetKeyUp(KeyCode.Alpha4))
+        else
+        {
+            anim.SetBool("Sucking", false);
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             StopSucking();
         }
-        if (Input.GetKeyUp(KeyCode.Alpha5))
+        if (Input.GetKeyUp(KeyCode.G))
         {
             ShootProjectile();
         }
         JogandoCidadao();
 
+
+
+        // animation hack
+        var p = gun.localPosition;
+        var animState = anim.GetCurrentAnimatorStateInfo(0);
+        if(animState.IsName("Succ"))
+        {
+            p.z = succAnimationPos;
+        }
+        else if(animState.IsName("Shoot"))
+        {
+            p.z = shotAnimationPos;
+        }
+        else if(animState.IsName("Idle"))
+        {
+            p.z = idleAnimationPos;
+        }
+        gun.localPosition = p;
     }
 
     public void Suck()
@@ -171,9 +195,9 @@ public class PlayerController : MonoBehaviour
         // get succables nearby
         foreach(var obj in Physics.OverlapSphere(transform.position,radius))
         {
-            if(obj.GetComponent<ZombieAI>())
+            if (obj.GetComponent<ZombieAI>() && obj.GetComponent<ZombieAI>().hostile)
             {
-                float ang = Vector3.Angle(transform.forward, (obj.transform.position - transform.position).normalized);
+                float ang = Vector3.Angle(transform.forward, (obj.transform.position - gunPoint.position).normalized);
                 if (ang < succAngle)
                     nearest = obj.GetComponent<ZombieAI>();
             }
@@ -184,6 +208,7 @@ public class PlayerController : MonoBehaviour
             finishSuckTime = Time.time + timeSucking;
             suckingTarget = nearest;
             suckingTarget.suckEffect.gameObject.SetActive(true);
+            suckingTarget.StartSuck();
             suckingTarget.Stun();
         }
     }
@@ -192,17 +217,25 @@ public class PlayerController : MonoBehaviour
     {
         if(suckingTarget == null)
         {
+            Suck();
+            return;
+        }
+        if(Vector3.Distance(transform.position,suckingTarget.transform.position) > falloffDistance)
+        {
+            StopSucking();
             return;
         }
         float fac = (finishSuckTime - Time.time) / timeSucking;
-        Debug.Log(fac);
+
         Vector3 newPos = Vector3.Lerp(gunPoint.position, suckingTarget.transform.position, fac);
         suckingTarget.suckEffect.position = newPos;
         if (Time.time > finishSuckTime)
         {
             suckingTarget.suckEffect.gameObject.SetActive(false);
-            suckingTarget.TakeDamage();
+            suckingTarget.TakeEnemyDamage();
+            suckingTarget.StopStun();
             projectileAmmo++;
+            suckingTarget.EndSuck();
             suckingTarget = null;
         }
     }
@@ -213,6 +246,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        suckingTarget.CancelSuck();
         suckingTarget.suckEffect.gameObject.SetActive(false);
         suckingTarget.StopStun();
         suckingTarget = null;
@@ -224,6 +258,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        anim.SetTrigger("Shot");
 
         projectileAmmo--;
         GameObject obj = Instantiate(gunProjectileThing);
@@ -547,6 +582,14 @@ public class PlayerController : MonoBehaviour
         health--;
         if(health <= 0)
         {
+            foreach(ZombieAI ai in GameObject.FindObjectsOfTypeAll(typeof(ZombieAI)))
+            {
+                if(ai.hostile)
+                {
+                    ai.anim.SetTrigger("Meme");
+                    ai.enabled = false;
+                }
+            }
             UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
     }

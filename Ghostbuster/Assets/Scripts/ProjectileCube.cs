@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class ProjectileCube : MonoBehaviour
 {
+    public LayerMask stopLayerMask;
     private void OnCollisionEnter(Collision collision)
     {
-        GetComponent<Rigidbody>().isKinematic = true;
+        if(stopLayerMask == (stopLayerMask | (1 << collision.gameObject.layer)))
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+
+        }
     }
 }
+
