@@ -43,6 +43,7 @@ public class ZombieAI : MonoBehaviour
 
     Collider[] targetsColliders;
     List<GameObject> targetsObjectList = new List<GameObject>();
+    public bool carried;
 
     public PlayerController player;
     [Header("Wandering")]
@@ -82,7 +83,7 @@ public class ZombieAI : MonoBehaviour
     }
     private void Update()
     {
-
+        
         if(currentTarget != null)
             distTarget = Vector3.Distance(currentTarget.position, transform.position);
         if(currState == AIState.Dead)
@@ -238,7 +239,10 @@ public class ZombieAI : MonoBehaviour
             var targetsColliders = Physics.OverlapSphere(transform.position, wanderRadius, targetLayer);
             foreach (var v in targetsColliders)
             {
-                if (v.GetComponent<ZombieAI>() == null || v.GetComponent<ZombieAI>().hostile || v.GetComponent<ZombieAI>().currState == AIState.Dead)
+                if (v.GetComponent<ZombieAI>() == null 
+                    || v.GetComponent<ZombieAI>().hostile 
+                    || v.GetComponent<ZombieAI>().currState == AIState.Dead
+                    || v.GetComponent<ZombieAI>().carried)
                     continue;
                 float d = Vector3.Distance(v.transform.position, transform.position);
                 if (d < dist)
@@ -444,7 +448,12 @@ public class ZombieAI : MonoBehaviour
     {
         anim.SetTrigger("StopSuck");
     }
+    public void ForceAnotherTarget()
+    {
+        currentTarget = null;
+        currState = AIState.Wander;
 
+    }
     public void EndSuck()
     {
         if (enemyHealth <= 0)
@@ -465,4 +474,21 @@ public class ZombieAI : MonoBehaviour
         stunned = false;
         agent.isStopped = false;
     }
+
+    public void GetCarried()
+    {
+        carried = true;
+        agent.isStopped = true;
+        if(chaser != null)
+        {
+            chaser.ForceAnotherTarget();
+        }
+    }
+
+    public void GetDropped()
+    {
+        carried = false;
+        agent.isStopped = false;
+    }
+
 }

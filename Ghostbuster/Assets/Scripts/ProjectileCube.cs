@@ -10,7 +10,7 @@ public class ProjectileCube : MonoBehaviour
         if(stopLayerMask == (stopLayerMask | (1 << collision.gameObject.layer)))
         {
             GetComponent<Rigidbody>().isKinematic = true;
-
+            gameObject.layer = LayerMask.NameToLayer("Ground");
         }
     }
 }

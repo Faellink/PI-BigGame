@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public Text hl;
+    public TMPro.TMP_Text hl;
     [SerializeField] private Transform debugHitPointTransform;
     [SerializeField] private Transform hookshotTransform;
 
@@ -100,6 +100,15 @@ public class PlayerController : MonoBehaviour
     public float idleAnimationPos;
     public Transform gun;
 
+    [Header("Pickign NPC")]
+    public float pickupRange;
+
+    public ZombieAI carryNPC;
+    public Transform shoulderTransform;
+    public Transform safePoint;
+    public LayerMask carryLayerMask;
+    public Text tex;
+
     private enum State
     {
         Normal,
@@ -122,10 +131,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        hl.text = string.Format("vida: {0}", health);
+        hl.text = string.Format("Vida: {0}", health);
         switch (state)
         {
             default:
@@ -145,7 +153,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Suck();
@@ -163,13 +170,10 @@ public class PlayerController : MonoBehaviour
         {
             StopSucking();
         }
-        if (Input.GetKeyUp(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             ShootProjectile();
         }
-        JogandoCidadao();
-
-
 
         // animation hack
         var p = gun.localPosition;
@@ -461,7 +465,6 @@ public class PlayerController : MonoBehaviour
 
     void JogandoCidadao()
     {
-
         if (cidadao == null)
         {
             cidadaoScrpt = null;
