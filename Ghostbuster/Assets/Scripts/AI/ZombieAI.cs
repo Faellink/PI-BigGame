@@ -272,7 +272,9 @@ public class ZombieAI : MonoBehaviour
         if (currState == AIState.Idle && Time.time > stopIdleTime)
         {
             // stop idling
+            Debug.Log("walk");
             currState = AIState.Wander;
+            hasWanderPosition = false;
             return;
         }
 
@@ -292,6 +294,7 @@ public class ZombieAI : MonoBehaviour
             {
                 stopIdleTime = Time.time + WanderCooldown;
                 currState = AIState.Idle;
+                hasWanderPosition = false;
             }
             else
             {

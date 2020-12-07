@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: 4926a9e18ee72424c9cc2f8ae5e08039
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 691883033789133926
+    second: 14-145402_crosshair-crosshair-sprite_0
+  - first:
+      213: 4902185535266553981
+    second: 14-145402_crosshair-crosshair-sprite_1
+  - first:
+      213: -378202666177096139
+    second: 14-145402_crosshair-crosshair-sprite_2
+  - first:
+      213: 2055798641113843040
+    second: 14-145402_crosshair-crosshair-sprite_3
+  - first:
+      213: -2117044028838595662
+    second: 14-145402_crosshair-crosshair-sprite_4
+  - first:
+      213: -766354567916405462
+    second: 14-145402_crosshair-crosshair-sprite_5
+  - first:
+      213: -7929355730740343213
+    second: 14-145402_crosshair-crosshair-sprite_6
+  - first:
+      213: 7108363755561462945
+    second: 14-145402_crosshair-crosshair-sprite_7
+  - first:
+      213: -143498146618498958
+    second: 14-145402_crosshair-crosshair-sprite_8
+  - first:
+      213: -6529379288547803651
+    second: 14-145402_crosshair-crosshair-sprite_9
+  - first:
+      213: 1744286050220053274
+    second: 14-145402_crosshair-crosshair-sprite_10
+  - first:
+      213: -7793115676023005433
+    second: 14-145402_crosshair-crosshair-sprite_11
+  - first:
+      213: 2836637902398487067
+    second: 14-145402_crosshair-crosshair-sprite_12
+  - first:
+      213: 7343654129677716616
+    second: 14-145402_crosshair-crosshair-sprite_13
+  - first:
+      213: -1239565387459714309
+    second: 14-145402_crosshair-crosshair-sprite_14
+  - first:
+      213: -3734884978834330454
+    second: 14-145402_crosshair-crosshair-sprite_15
+  - first:
+      213: -4303861039684716260
+    second: 14-145402_crosshair-crosshair-sprite_16
+  - first:
+      213: -3801563391918989054
+    second: 14-145402_crosshair-crosshair-sprite_17
+  - first:
+      213: 7353667224518635008
+    second: 14-145402_crosshair-crosshair-sprite_18
+  - first:
+      213: 6730065168064229796
+    second: 14-145402_crosshair-crosshair-sprite_19
+  - first:
+      213: -5755925069220169573
+    second: 14-145402_crosshair-crosshair-sprite_20
+  - first:
+      213: 5716828986000378278
+    second: 14-145402_crosshair-crosshair-sprite_21
+  - first:
+      213: -6323615804674857572
+    second: 14-145402_crosshair-crosshair-sprite_22
+  - first:
+      213: 6394888487473247203
+    second: 14-145402_crosshair-crosshair-sprite_23
+  - first:
+      213: -9144200099982518700
+    second: 14-145402_crosshair-crosshair-sprite_24
+  - first:
+      213: 6692431480633420180
+    second: 14-145402_crosshair-crosshair-sprite_25
+  - first:
+      213: 4808078146227665838
+    second: 14-145402_crosshair-crosshair-sprite_26
+  - first:
+      213: 234690240329013367
+    second: 14-145402_crosshair-crosshair-sprite_27
+  - first:
+      213: -631090062467546854
+    second: 14-145402_crosshair-crosshair-sprite_28
+  - first:
+      213: -2893003001255658379
+    second: 14-145402_crosshair-crosshair-sprite_29
+  - first:
+      213: -8791619106543418071
+    second: 14-145402_crosshair-crosshair-sprite_30
+  - first:
+      213: -8413447548641749060
+    second: 14-145402_crosshair-crosshair-sprite_31
+  - first:
+      213: -7866527760434275975
+    second: 14-145402_crosshair-crosshair-sprite_32
+  - first:
+      213: 7762519519286191795
+    second: 14-145402_crosshair-crosshair-sprite_33
+  - first:
+      213: -4310105696501578503
+    second: 14-145402_crosshair-crosshair-sprite_34
+  - first:
+      213: 5440924268915502961
+    second: 14-145402_crosshair-crosshair-sprite_35
+  - first:
+      213: 8855247580053156534
+    second: 14-145402_crosshair-crosshair-sprite_36
+  - first:
+      213: 259609336088916491
+    second: 14-145402_crosshair-crosshair-sprite_37
+  - first:
+      213: 842205654802498614
+    second: 14-145402_crosshair-crosshair-sprite_38
+  - first:
+      213: -3468918480346000209
+    second: 14-145402_crosshair-crosshair-sprite_39
+  - first:
+      213: 2642473378871030984
+    second: 14-145402_crosshair-crosshair-sprite_40
+  - first:
+      213: 4997002834017883486
+    second: 14-145402_crosshair-crosshair-sprite_41
+  - first:
+      213: 5473926837761641421
+    second: 14-145402_crosshair-crosshair-sprite_42
+  - first:
+      213: -3745568024297233195
+    second: 14-145402_crosshair-crosshair-sprite_43
+  - first:
+      213: 6514776201422598582
+    second: 14-145402_crosshair-crosshair-sprite_44
+  - first:
+      213: 5169594002673228980
+    second: 14-145402_crosshair-crosshair-sprite_45
+  - first:
+      213: 159364436183436769
+    second: 14-145402_crosshair-crosshair-sprite_46
+  - first:
+      213: -8925148999261496153
+    second: 14-145402_crosshair-crosshair-sprite_47
+  - first:
+      213: -5891875121235862663
+    second: 14-145402_crosshair-crosshair-sprite_48
+  - first:
+      213: 2682700004453778436
+    second: 14-145402_crosshair-crosshair-sprite_49
+  - first:
+      213: 682964433865212374
+    second: 14-145402_crosshair-crosshair-sprite_50
+  - first:
+      213: 1091547171417509380
+    second: 14-145402_crosshair-crosshair-sprite_51
+  - first:
+      213: -5354464929703673568
+    second: 14-145402_crosshair-crosshair-sprite_52
+  - first:
+      213: 6956583212139889754
+    second: 14-145402_crosshair-crosshair-sprite_53
+  - first:
+      213: 3391759579861852976
+    second: 14-145402_crosshair-crosshair-sprite_54
+  - first:
+      213: 1014760847057796882
+    second: 14-145402_crosshair-crosshair-sprite_55
+  - first:
+      213: -3441738624830269293
+    second: 14-145402_crosshair-crosshair-sprite_56
+  - first:
+      213: -8420399593490406305
+    second: 14-145402_crosshair-crosshair-sprite_57
+  - first:
+      213: -1232382231231505476
+    second: 14-145402_crosshair-crosshair-sprite_58
+  - first:
+      213: -8433548925282322464
+    second: 14-145402_crosshair-crosshair-sprite_59
+  - first:
+      213: 7954457854656886584
+    second: 14-145402_crosshair-crosshair-sprite_60
+  - first:
+      213: -7775813259191759659
+    second: 14-145402_crosshair-crosshair-sprite_61
+  - first:
+      213: -3712138077665637460
+    second: 14-145402_crosshair-crosshair-sprite_62
+  - first:
+      213: -3515789649241132724
+    second: 14-145402_crosshair-crosshair-sprite_63
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: 2
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 376
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 664fe1714ff0a9900800000000000000
+      internalID: 691883033789133926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_1
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 376
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d700f9c75cf080440800000000000000
+      internalID: 4902185535266553981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_2
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 376
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 536986dcdaa50caf0800000000000000
+      internalID: -378202666177096139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 188
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0654255d8f9a78c10800000000000000
+      internalID: 2055798641113843040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_4
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 188
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b3b63f1cafbe92e0800000000000000
+      internalID: -2117044028838595662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_5
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 190
+        width: 127
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2d385fa49c5d55f0800000000000000
+      internalID: -766354567916405462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35e838379f445f190800000000000000
+      internalID: -7929355730740343213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_7
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 1
+        width: 128
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1aca0888c2bf5a260800000000000000
+      internalID: 7108363755561462945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-145402_crosshair-crosshair-sprite_8
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 270a0e82231320ef0800000000000000
+      internalID: -143498146618498958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

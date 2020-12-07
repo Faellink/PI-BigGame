@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public AudioSource source;
+    public AudioClip suckClip;
+    public AudioClip shotClip;
+    public AudioClip damageClip;
     public TMPro.TMP_Text hl;
     [SerializeField] private Transform debugHitPointTransform;
     [SerializeField] private Transform hookshotTransform;
@@ -582,6 +586,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage()
     {
+
         health--;
         if(health <= 0)
         {
@@ -595,5 +600,6 @@ public class PlayerController : MonoBehaviour
             }
             UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
+
     }
 }
